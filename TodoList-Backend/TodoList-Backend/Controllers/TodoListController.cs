@@ -4,7 +4,7 @@ using TodoList_Backend.Services;
 namespace TodoList_Backend.Controllers
 {
     [ApiController]
-    [Route("todos")]
+    [Route("")]
     public class TodoListController : ControllerBase
     {
         private readonly ILogger<TodoListController> _logger;
@@ -16,7 +16,7 @@ namespace TodoList_Backend.Controllers
             _todoService = todoService;
         }
 
-        [HttpGet]
+        [HttpGet("todos")]
         [ProducesResponseType(typeof(string[]), StatusCodes.Status200OK)]
         public IActionResult GetTodos()
         {
@@ -25,7 +25,7 @@ namespace TodoList_Backend.Controllers
             return Ok(todos);
         }
 
-        [HttpPost("{todo}")]
+        [HttpPost("todos/{todo}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult AddTodo([FromRoute] string todo)
         {
@@ -34,7 +34,7 @@ namespace TodoList_Backend.Controllers
             return Ok();
         }
 
-        [HttpDelete("{todo}")]
+        [HttpDelete("todos/{todo}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult DeleteTodo([FromRoute] string todo)
         {
