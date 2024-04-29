@@ -1,4 +1,5 @@
 
+using TodoList_Backend.Exceptions;
 using TodoList_Backend.Extensions;
 
 namespace TodoList_Backend
@@ -12,7 +13,8 @@ namespace TodoList_Backend
             builder.Configuration.AddEnvironmentVariables();
 
             var isDevelopment = builder.Environment.IsDevelopment();
-            var frontendUrl = builder.Configuration["FrontendUrl"] ?? "";
+            var frontendUrl = builder.Configuration["FrontendUrl"] ?? 
+                              throw new AppSettingNotDefinedException("FrontendUrl");
 
             builder.Services.ConfigureServices();
             builder.Services.AddControllers();
