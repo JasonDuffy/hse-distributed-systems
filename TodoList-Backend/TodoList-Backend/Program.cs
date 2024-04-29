@@ -1,4 +1,6 @@
 
+using TodoList_Backend.Extensions;
+
 namespace TodoList_Backend
 {
     public class Program
@@ -7,26 +9,26 @@ namespace TodoList_Backend
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Configuration.AddEnvironmentVariables();
 
+            var isDevelopment = builder.Environment.IsDevelopment();
+            var frontendUrl = builder.Configuration["FrontendUrl"] ?? "";
+
+            builder.Services.ConfigureServices();
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.ConfigureSwagger();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (isDevelopment)
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            app.ConfigureCors(frontendUrl);
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
 
             app.MapControllers();
 
