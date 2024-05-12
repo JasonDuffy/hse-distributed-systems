@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TodoList_Backend.Exceptions;
 using TodoList_Backend.Extensions;
-using TodoList_Backend.Model;
+using TodoList_Backend.Database;
 
 namespace TodoList_Backend
 {

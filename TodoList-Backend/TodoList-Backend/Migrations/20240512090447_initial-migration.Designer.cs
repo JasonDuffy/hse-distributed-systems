@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TodoList_Backend.Model;
+using TodoList_Backend.Database;
+
 
 #nullable disable
 
@@ -12,7 +11,7 @@ namespace TodoList_Backend.Migrations
 {
     [DbContext(typeof(ApiDBContext))]
     [Migration("20240512090447_initial-migration")]
-    partial class initialmigration
+    partial class Initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
