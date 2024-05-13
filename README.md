@@ -36,6 +36,11 @@ To run this project, an installation of [Docker](https://www.docker.com/) is req
 | :-------- | :------- | :-------------------------------- |
 | `todo`      | `string array` | All saved ToDos as array. |
 
+Status codes:
+| Code | Description |
+| :-------- | :-------  |
+| 200      | Successfully returned ToDos |
+
 #### Add todo
 
 ```http
@@ -45,6 +50,11 @@ To run this project, an installation of [Docker](https://www.docker.com/) is req
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `todo`      | `string` | **Required**. Text of ToDo to add. |
+
+Status codes:
+| Code | Description |
+| :-------- | :-------  |
+| 200      | Server tried adding a ToDo and did not run into any server errors. (Does not mean the Todo was added, duplicates are ignored!) |
 
 #### Delete todo
 
@@ -56,6 +66,10 @@ To run this project, an installation of [Docker](https://www.docker.com/) is req
 | :-------- | :------- | :-------------------------------- |
 | `todo`      | `string` | **Required**. Text of ToDo to remove. |
 
+Status codes:
+| Code | Description |
+| :-------- | :-------  |
+| 200      | Server tried removing a ToDo and did not run into any server errors. (Does not mean a Todo was removed!) |
 
 ## Run Locally
 
