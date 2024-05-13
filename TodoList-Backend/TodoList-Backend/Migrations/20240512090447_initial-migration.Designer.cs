@@ -9,7 +9,7 @@ using TodoList_Backend.Database;
 
 namespace TodoList_Backend.Migrations
 {
-    [DbContext(typeof(ApiDBContext))]
+    [DbContext(typeof(ApiDbContext))]
     [Migration("20240512090447_initial-migration")]
     partial class Initialmigration
     {

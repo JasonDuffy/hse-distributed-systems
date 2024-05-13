@@ -1,6 +1,18 @@
-version: '3.4'
-
 services:
+  dbpost:
+    image: postgres:latest
+    container_name: dbpost
+    environment:
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: password
+       POSTGRES_DB: Todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - app_data:/var/lib/postgresql/data
+    networks:
+     - main-net
+
   todolist-backend:
     image: todolistbackend
     build:
@@ -16,27 +28,37 @@ services:
      - main-net
     restart: always
 
-
-
-
-  dbpost:
-    image: postgres:latest
-    container_name: dbpost
-    environment:
-       POSTGRES_USER: postgres
-       POSTGRES_PASSWORD: password
-       POSTGRES_DB: Todo
-    ports:
-      - "5432:5432"
-    volumes:
-      - app_data:/var/lib/postgresql/data
+  todoui-thymeleaf:
+    image: maeddes/todoui-thymeleaf:v2404
     networks:
-     - main-net
+      - main-net
+    ports:
+      - "8090:8090"
+    environment:
+      - BACKEND_URL=http://todolist-backend:8080/
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otelcol:4317
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=otelcol:4317
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc
+      - OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=grpc
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=todoui-thymeleaf
+      - OTEL_METRICS_EXPORTER=otlp,logging-otlp
+      - OTEL_LOGS_EXPORTER=none
+
+  todoui-flask:
+    image: maeddes/todoui-flask:v2404
+    networks:
+      - main-net
+    ports:
+      - "5001:5000"
+    environment:
+      - BACKEND_URL=http://todolist-backend:8080/todos/
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otelcol:4317
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=todoui-flask
+      - OTEL_METRICS_EXPORTER=otlp
 
 networks:
   main-net:
     driver: bridge
-
 
 volumes:
   app_data:
