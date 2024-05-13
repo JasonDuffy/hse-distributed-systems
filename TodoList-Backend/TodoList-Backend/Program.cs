@@ -9,6 +9,8 @@ namespace TodoList_Backend
     {
         public static void Main(string[] args)
         {
+            ShowLicense();
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Configuration.AddEnvironmentVariables();
@@ -39,6 +41,15 @@ namespace TodoList_Backend
             app.MapControllers();
 
             app.Run();
+        }
+
+        private static void ShowLicense()
+        {
+            Console.WriteLine("HSE Distributed Systems ToDo-List");
+            Console.WriteLine("This project is licensed under the GNU General Public License 3.");
+            Console.WriteLine("HSE Distributed Systems ToDo-List Copyright (C) 2024 Jason Patrick Duffy (https://github.com/JasonDuffy), Tom Nguyen Dinh (https://github.com/tomhuy-w)");
+            Console.WriteLine("This program comes with ABSOLUTELY NO WARRANTY.");
+            Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions.");
         }
     }
 }
