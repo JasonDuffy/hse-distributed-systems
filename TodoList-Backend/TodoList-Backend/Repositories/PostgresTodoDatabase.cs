@@ -24,7 +24,7 @@ namespace TodoList_Backend.Repositories
             CheckTodoListInitialization();
 
             var existTodoTitles = _context.Todos!.FirstOrDefault(t => t.Title == todo);
-            if (existTodoTitles is not null) 
+            if (existTodoTitles is not null)
                 return;
 
             var todoTitles = new Todo() { Title = todo };
@@ -47,7 +47,7 @@ namespace TodoList_Backend.Repositories
 
         private void CheckTodoListInitialization()
         {
-            if(_context.Todos is null)
+            if (_context.Todos is null)
                 throw new TodosNotInitializedException();
         }
     }

@@ -3,8 +3,12 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchServiceName": "todolist-backend",
       "serviceActions": {
-        "todolist-backend": "StartDebugging"
+        "todolist-backend": "StartDebugging",
+        "dbpost": "StartWithoutDebugging",
+        "todoui-flask": "StartWithoutDebugging",
+        "todoui-thymeleaf": "StartWithoutDebugging"
       }
     }
   }

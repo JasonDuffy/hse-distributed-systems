@@ -1,0 +1,8 @@
+services:
+  todolist-backend:
+    image: todolistbackend
+    build:
+      context: .
+      dockerfile: TodoList-Backend/Dockerfile.dev
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
