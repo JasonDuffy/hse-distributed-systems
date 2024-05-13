@@ -5,12 +5,19 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>c1362198-e04b-4752-8fc1-6bdc76b3ed87</ProjectGuid>
-    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>todolist-backend</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docker-compose.yml" />
+    <None Include="docker-compose.dev.yml" >
+	    <DependentUpon>docker-compose.yml</DependentUpon>
+	</None>
     <None Include=".dockerignore" />
   </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AdditionalComposeFilePaths>docker-compose.yml;docker-compose.dev.yml</AdditionalComposeFilePaths>
+	<DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+	<DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+	<DockerServiceName>todolist-backend</DockerServiceName>
+	<DockerDevelopmentMode>Fast</DockerDevelopmentMode>
+  </PropertyGroup>
 </Project>

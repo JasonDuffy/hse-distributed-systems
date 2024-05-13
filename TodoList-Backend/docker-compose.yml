@@ -14,10 +14,7 @@ services:
      - main-net
 
   todolist-backend:
-    image: todolistbackend
-    build:
-      context: .
-      dockerfile: TodoList-Backend/Dockerfile
+    image: jasonpduffy/hse-distributed-systems:v1.0
     environment:
       - ConnectionStrings__DefaultConnection=Server=dbpost; port=5432;User Id=postgres;Password=password;Database=Todo; 
     ports:
