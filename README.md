@@ -19,6 +19,11 @@ Simple managing of a ToDo list:
 **Server:** ASP.NET 8.0, PostgreSQL, Docker
 
 
+## Requirements
+
+To run this project, an installation of [Docker](https://www.docker.com/) is required.
+
+
 ## API Reference
 
 #### Get all todos
@@ -26,6 +31,10 @@ Simple managing of a ToDo list:
 ```http
   GET /todos
 ```
+
+| Return | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `todo`      | `string array` | All saved ToDos as array. |
 
 #### Add todo
 
