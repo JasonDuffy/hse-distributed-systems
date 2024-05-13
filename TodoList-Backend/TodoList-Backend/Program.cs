@@ -15,29 +15,19 @@ namespace TodoList_Backend
             builder.Configuration.AddEnvironmentVariables();
 
             var isDevelopment = builder.Environment.IsDevelopment();
-            var frontendUrl = builder.Configuration["FrontendUrl"] ?? 
-                              throw new AppSettingNotDefinedException("FrontendUrl");
 
             builder.Services.ConfigureServices();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.ConfigureSwagger();
 
-            var connection = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<ApiDBContext>(u => u.UseNpgsql(connection));
+            var connection = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                throw new AppSettingNotDefinedException("ConnectionString");
+            builder.Services.AddDatabase(connection);
 
             var app = builder.Build();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-
-                var context = services.GetRequiredService<ApiDBContext>();
-                if (context.Database.GetPendingMigrations().Any())
-                {
-                    context.Database.Migrate();
-                }
-            }
+            app.Services.RunDatabaseMigrations();
 
             if (isDevelopment)
             {
@@ -45,8 +35,7 @@ namespace TodoList_Backend
                 app.UseSwaggerUI();
             }
 
-            app.ConfigureCors(frontendUrl);
-            app.UseHttpsRedirection();
+            app.ConfigureCors();
 
             app.MapControllers();
 
