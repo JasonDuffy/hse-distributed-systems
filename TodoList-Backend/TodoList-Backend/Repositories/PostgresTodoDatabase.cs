@@ -23,8 +23,7 @@ namespace TodoList_Backend.Repositories
         {
             CheckTodoListInitialization();
 
-            var existTodoTitles = _context.Todos!.FirstOrDefault(t => t.Title == todo);
-            if (existTodoTitles is not null)
+            if (_context.Todos!.Any(t => t.Title == todo))
                 return;
 
             var todoTitles = new Todo() { Title = todo };

@@ -11,7 +11,8 @@
 
         public void AddTodo(string todo)
         {
-            _todos.Add(todo);
+            if (!_todos.Contains(todo))
+                _todos.Add(todo);
         }
 
         public void DeleteTodo(string todo)
