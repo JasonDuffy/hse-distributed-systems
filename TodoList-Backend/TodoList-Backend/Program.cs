@@ -16,19 +16,24 @@ namespace TodoList_Backend
             builder.Configuration.AddEnvironmentVariables();
 
             var isDevelopment = builder.Environment.IsDevelopment();
+            var useMemoryDb = builder.Configuration.GetValue<bool>("UseMemoryDB");
 
-            builder.Services.ConfigureServices();
+            builder.Services.ConfigureServices(useMemoryDb);
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.ConfigureSwagger();
 
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                throw new AppSettingNotDefinedException("ConnectionString");
-            builder.Services.AddDatabase(connectionString);
+            if (!useMemoryDb)
+            {
+                var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                                       throw new AppSettingNotDefinedException("ConnectionString");
+                builder.Services.AddDatabase(connectionString);
+            }
 
             var app = builder.Build();
 
-            app.Services.RunDatabaseMigrations();
+            if (!useMemoryDb)
+                app.Services.RunDatabaseMigrations();
 
             if (isDevelopment)
             {
@@ -50,6 +55,7 @@ namespace TodoList_Backend
             Console.WriteLine("HSE Distributed Systems ToDo-List Copyright (C) 2024 Jason Patrick Duffy (https://github.com/JasonDuffy), Tom Nguyen Dinh (https://github.com/tomhuy-w)");
             Console.WriteLine("This program comes with ABSOLUTELY NO WARRANTY.");
             Console.WriteLine("This is free software, and you are welcome to redistribute it under certain conditions.");
+            Console.WriteLine();
         }
     }
 }

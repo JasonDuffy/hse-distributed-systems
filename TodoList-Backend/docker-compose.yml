@@ -14,8 +14,9 @@ services:
      - main-net
 
   todolist-backend:
-    image: jasonpduffy/hse-distributed-systems:v1.0
+    image: jasonpduffy/hse-distributed-systems:v1.1
     environment:
+      - UseMemoryDB=false
       - ConnectionStrings__DefaultConnection=Server=dbpost; port=5432;User Id=postgres;Password=password;Database=Todo; 
     ports:
       - 8080:8080

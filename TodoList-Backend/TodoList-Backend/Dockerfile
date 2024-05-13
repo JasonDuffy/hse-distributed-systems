@@ -5,6 +5,7 @@ USER app
 WORKDIR /app
 EXPOSE 8080
 ENV urls=http://*:8080
+ENV UseMemoryDB=false
 ENV ASPNETCORE_HTTP_PORTS=8080
 ENV ConnectionStrings__DefaultConnection=Server=localhost; port=5432;User Id=postgres;Password=password;Database=Todo;
 
