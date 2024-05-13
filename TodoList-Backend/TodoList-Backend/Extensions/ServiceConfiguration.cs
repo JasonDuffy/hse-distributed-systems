@@ -7,8 +7,8 @@ namespace TodoList_Backend.Extensions
     {
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddSingleton<ITodoDatabase, LocalTodoDatabase>(); // Replace LocalTodoDatabase with real database implementation once done
-            services.AddSingleton<ITodoService, TodoService>();
+            services.AddScoped<ITodoDatabase, PostgresTodoDatabase>();
+            services.AddScoped<ITodoService, TodoService>();
         }
     }
 }

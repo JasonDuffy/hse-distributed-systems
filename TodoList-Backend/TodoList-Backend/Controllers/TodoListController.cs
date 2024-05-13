@@ -7,40 +7,41 @@ namespace TodoList_Backend.Controllers
     [Route("")]
     public class TodoListController : ControllerBase
     {
-        private readonly ILogger<TodoListController> _logger;
-        private readonly ITodoService _todoService;
+        
+                private readonly ILogger<TodoListController> _logger;
+                private readonly ITodoService _todoService;
 
-        public TodoListController(ILogger<TodoListController> logger, ITodoService todoService)
-        {
-            _logger = logger;
-            _todoService = todoService;
-        }
+                public TodoListController(ILogger<TodoListController> logger, ITodoService todoService)
+                {
+                    _logger = logger;
+                    _todoService = todoService;
+                }
 
-        [HttpGet("todos")]
-        [ProducesResponseType(typeof(string[]), StatusCodes.Status200OK)]
-        public IActionResult GetTodos()
-        {
-            var todos = _todoService.GetTodos();
-            _logger.LogInformation("Got todos: {todoList}", todos.ToList());
-            return Ok(todos);
-        }
+                [HttpGet("todos")]
+                [ProducesResponseType(typeof(string[]), StatusCodes.Status200OK)]
+                public IActionResult GetTodos()
+                {
+                    var todos = _todoService.GetTodos();
+                    _logger.LogInformation("Got todos: {todoList}", todos.ToList());
+                    return Ok(todos);
+                }
 
-        [HttpPost("todos/{todo}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult AddTodo([FromRoute] string todo)
-        {
-            _logger.LogInformation("Adding todo: {todo}", todo);
-            _todoService.AddTodo(todo);
-            return Ok();
-        }
+                [HttpPost("todos/{todo}")]
+                [ProducesResponseType(StatusCodes.Status200OK)]
+                public IActionResult AddTodo([FromRoute] string todo)
+                {
+                    _logger.LogInformation("Adding todo: {todo}", todo);
+                    _todoService.AddTodo(todo);
+                    return Ok();
+                }
 
-        [HttpDelete("todos/{todo}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult DeleteTodo([FromRoute] string todo)
-        {
-            _logger.LogInformation("Deleting todo: {todo}", todo);
-            _todoService.DeleteTodo(todo);
-            return Ok();
-        }
+                [HttpDelete("todos/{todo}")]
+                [ProducesResponseType(StatusCodes.Status200OK)]
+                public IActionResult DeleteTodo([FromRoute] string todo)
+                {
+                    _logger.LogInformation("Deleting todo: {todo}", todo);
+                    _todoService.DeleteTodo(todo);
+                    return Ok();
+                }
     }
 }
