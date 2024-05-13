@@ -5,7 +5,7 @@ USER app
 WORKDIR /app
 EXPOSE 8080
 ENV urls=http://*:8080
-
+ENV ConnectionStrings__DefaultConnection=Server=localhost; port=5432;User Id=postgres;Password=password;Database=Todo;
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
