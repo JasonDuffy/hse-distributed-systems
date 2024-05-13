@@ -8,7 +8,7 @@ using TodoList_Backend.Database;
 
 namespace TodoList_Backend.Migrations
 {
-    [DbContext(typeof(ApiDBContext))]
+    [DbContext(typeof(ApiDbContext))]
     partial class ApiDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

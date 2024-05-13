@@ -2,9 +2,9 @@
 
 namespace TodoList_Backend.Database
 {
-    public class ApiDBContext : DbContext
+    public class ApiDbContext : DbContext
     {
-        public ApiDBContext(DbContextOptions options)   :base(options) { }   
-        public DbSet<Todo> Todos { get; set; }
+        public ApiDbContext(DbContextOptions options) : base(options) { }
+        public DbSet<Todo>? Todos { get; set; }
     }
 }

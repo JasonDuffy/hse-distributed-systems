@@ -7,7 +7,7 @@ namespace TodoList_Backend.Extensions
     {
         public static void AddDatabase(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<ApiDBContext>(u => u.UseNpgsql(connectionString));
+            services.AddDbContext<ApiDbContext>(u => u.UseNpgsql(connectionString));
         }
 
         public static void RunDatabaseMigrations(this IServiceProvider services)
@@ -15,7 +15,7 @@ namespace TodoList_Backend.Extensions
             using var scope = services.CreateScope();
             var serviceProvider = scope.ServiceProvider;
 
-            var context = serviceProvider.GetRequiredService<ApiDBContext>();
+            var context = serviceProvider.GetRequiredService<ApiDbContext>();
             if (context.Database.GetPendingMigrations().Any())
             {
                 context.Database.Migrate();

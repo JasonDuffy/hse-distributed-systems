@@ -1,43 +1,54 @@
 ﻿using TodoList_Backend.Database;
+using TodoList_Backend.Exceptions;
 
 namespace TodoList_Backend.Repositories
 {
-    public class PostgresTodoDatabase :ITodoDatabase
+    public class PostgresTodoDatabase : ITodoDatabase
     {
-        private readonly ApiDBContext context;
+        private readonly ApiDbContext _context;
 
-        public PostgresTodoDatabase(ApiDBContext apiDBContext)
+        public PostgresTodoDatabase(ApiDbContext apiDbContext)
         {
-            context = apiDBContext;
+            _context = apiDbContext;
         }
 
         public string[] GetTodos()
         {
-            return context.Todos.Select(todo => todo.Title).ToArray();
+            CheckTodoListInitialization();
+
+            return _context.Todos!.Select(todo => todo.Title).ToArray();
         }
 
         public void AddTodo(string todo)
         {
-            var existTodoTitles = context.Todos.FirstOrDefault(t => t.Title == todo);
-            if (existTodoTitles is null)
-            {
-                var todoTitles = new Todo() { Title = todo };
-                context.Todos.Add(todoTitles);
-                context.SaveChanges();
-            }
+            CheckTodoListInitialization();
+
+            var existTodoTitles = _context.Todos!.FirstOrDefault(t => t.Title == todo);
+            if (existTodoTitles is not null) 
+                return;
+
+            var todoTitles = new Todo() { Title = todo };
+            _context.Todos!.Add(todoTitles);
+            _context.SaveChanges();
 
         }
 
         public void DeleteTodo(string todo)
         {
-            var value = context.Todos.FirstOrDefault(t => t.Title == todo);
-            if (value == null)
-            {
-                return ;
-            }
-            context.Todos.Remove(value);
-            context.SaveChanges();
+            CheckTodoListInitialization();
+
+            var value = _context.Todos!.FirstOrDefault(t => t.Title == todo);
+            if (value is null)
+                return;
+
+            _context.Todos!.Remove(value);
+            _context.SaveChanges();
         }
 
+        private void CheckTodoListInitialization()
+        {
+            if(_context.Todos is null)
+                throw new TodosNotInitializedException();
+        }
     }
 }

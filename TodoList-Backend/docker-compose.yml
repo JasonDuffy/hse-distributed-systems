@@ -58,11 +58,9 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.name=todoui-flask
       - OTEL_METRICS_EXPORTER=otlp
 
-
 networks:
   main-net:
     driver: bridge
-
 
 volumes:
   app_data:

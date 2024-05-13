@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using TodoList_Backend.Exceptions;
 using TodoList_Backend.Extensions;
-using TodoList_Backend.Database;
 
 namespace TodoList_Backend
 {
@@ -21,9 +20,9 @@ namespace TodoList_Backend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.ConfigureSwagger();
 
-            var connection = builder.Configuration.GetConnectionString("DefaultConnection") ??
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                 throw new AppSettingNotDefinedException("ConnectionString");
-            builder.Services.AddDatabase(connection);
+            builder.Services.AddDatabase(connectionString);
 
             var app = builder.Build();
 
