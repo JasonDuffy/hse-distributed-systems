@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: todolist-backend
+  name: todolist-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todolist-backend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: todolist-backend
+    spec:
+      containers:
+      - image: jasonpduffy/hse-distributed-systems:v1.1
+        name: hse-distributed-systems
+        ports:
+        - containerPort: 8080
+        resources: {}
+        env:
+        - name: UseMemoryDB
+          value: "false"
+        - name: ConnectionStrings__DefaultConnection
+          value: "Server=todolist-database; port=5432;User Id=postgres;Password=password;Database=Todo;"
+status: {}
